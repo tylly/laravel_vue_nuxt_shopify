@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "/opt/homebrew/Cellar/php@8.3/8.3.30/bin/php",
+            "args": [
+                "/Users/jamesadams/Documents/fireresq/workout_planner/workout_planner/artisan",
+                "boost:mcp"
+            ]
+        }
+    }
+}

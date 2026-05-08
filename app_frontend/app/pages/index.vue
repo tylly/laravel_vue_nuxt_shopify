@@ -1,8 +1,6 @@
 <template>
   <div>
-    <h1 class="text-2xs">
-      Welcome to the Workout Planner App!
-    </h1>
+    <h1 class="text-2xs font-saira">Welcome to the Workout Planner App!</h1>
   </div>
 </template>
 <script setup>

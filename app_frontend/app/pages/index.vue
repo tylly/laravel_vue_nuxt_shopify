@@ -23,7 +23,7 @@ const products = computed<Product[]>(() => data.value?.data?.products?.edges?.ma
           <div class="p-1">
             <Card class="bg-black/40 shadow-xl border-0 w-64 h-84">
               <CardContent class="flex flex-col items-center justify-center p-6 w-full h-full">
-                <img v-if="product.featuredMedia?.preview?.image?.url" :src="product.featuredMedia.preview.image.url" :alt="product.title" class="w-full h-40 object-contain mb-2" />
+                <img v-if="product.featuredMedia?.preview?.image?.url" :src="product.featuredMedia.preview.image.url" :alt="product.title" class=" h-40 mb-2 rounded-2xl" />
                 <span class="text-gray-200 font-saira uppercase text-sm text-center h-10 flex items-center justify-center">{{ product.title }}</span>
                 <span
                   v-if="product.priceRangeV2.minVariantPrice.amount === product.priceRangeV2.maxVariantPrice.amount"

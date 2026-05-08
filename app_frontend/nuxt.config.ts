@@ -21,7 +21,10 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/fonts", "shadcn-nuxt"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxt/fonts", "shadcn-nuxt", "nuxt-auth-sanctum"],
+  sanctum: {
+    baseUrl: "http://localhost:8000", // Laravel API
+  },
   shadcn: {
     /**
      * Prefix for all the imported component.

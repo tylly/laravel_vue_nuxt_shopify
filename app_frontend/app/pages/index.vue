@@ -4,7 +4,7 @@ console.log("Welcome page loaded");
 const config = useRuntimeConfig();
 const testfunction = async () => {
   try {
-    const data = await $fetch(`${config.public.apiBase}/api/get-products-storefront`);
+    const data = await $fetch(`${config.public.apiBase}/api/get-products`);
     console.log("route:" + config.public.apiBase);
     console.log("API response:", data);
   } catch (error) {

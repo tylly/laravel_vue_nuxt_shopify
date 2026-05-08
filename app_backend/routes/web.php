@@ -67,6 +67,13 @@ Route::get('/api/get-products', function () {
       node {
         id
         title
+        featuredMedia {
+          preview {
+            image {
+              url
+            }
+          }
+        }
       }
     }
   }

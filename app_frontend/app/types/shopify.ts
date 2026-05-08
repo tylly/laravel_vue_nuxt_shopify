@@ -10,10 +10,10 @@ export interface Product {
   };
   priceRangeV2: {
     minVariantPrice: {
-      amount: Number;
+      amount: string;
     };
     maxVariantPrice: {
-      amount: Number;
+      amount: string;
     };
   };
 }

@@ -12,7 +12,7 @@ const products = computed<Product[]>(() => data.value?.data?.products?.edges?.ma
 </script>
 <template>
   <div class="text-center flex flex-col justify-center">
-    <h1 class="text-4xl font-roboto mb-20">Shopify Store Wishlist</h1>
+    <h1 class="text-4xl font-saira uppercase mb-20 text-gray-200">Shopify Store Wishlist</h1>
     <Carousel
       class="relative w-full mx-auto"
       :opts="{
@@ -21,10 +21,13 @@ const products = computed<Product[]>(() => data.value?.data?.products?.edges?.ma
       <CarouselContent>
         <CarouselItem v-for="product in products" :key="product.id" class="md:basis-1/2 lg:basis-1/3 w-full">
           <div class="p-1">
-            <Card class="bg-black/40 shadow-xl border-0 w-64 h-64">
+            <Card class="bg-black/40 shadow-xl border-0 w-64 h-84">
               <CardContent class="flex flex-col items-center justify-center p-6 w-full h-full">
                 <img v-if="product.featuredMedia?.preview?.image?.url" :src="product.featuredMedia.preview.image.url" :alt="product.title" class="w-full h-40 object-contain mb-2" />
-                <span class="text-white font-saira uppercase text-sm text-center">{{ product.title }}</span>
+                <span class="text-gray-200 font-saira uppercase text-sm text-center h-10 flex items-center justify-center">{{ product.title }}</span>
+                <span class="text-emerald-500 font-saira uppercase text-md text-center h-6 flex items-center justify-center mt-4">
+                  ${{ parseFloat(product.priceRangeV2.minVariantPrice.amount).toFixed(2) }} - ${{ parseFloat(product.priceRangeV2.maxVariantPrice.amount).toFixed(2) }}
+                </span>
               </CardContent>
             </Card>
           </div>

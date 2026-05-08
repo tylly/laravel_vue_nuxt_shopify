@@ -25,9 +25,15 @@ const products = computed<Product[]>(() => data.value?.data?.products?.edges?.ma
               <CardContent class="flex flex-col items-center justify-center p-6 w-full h-full">
                 <img v-if="product.featuredMedia?.preview?.image?.url" :src="product.featuredMedia.preview.image.url" :alt="product.title" class="w-full h-40 object-contain mb-2" />
                 <span class="text-gray-200 font-saira uppercase text-sm text-center h-10 flex items-center justify-center">{{ product.title }}</span>
-                <span class="text-emerald-500 font-saira uppercase text-md text-center h-6 flex items-center justify-center mt-4">
+                <span
+                  v-if="product.priceRangeV2.minVariantPrice.amount === product.priceRangeV2.maxVariantPrice.amount"
+                  class="text-emerald-500 font-saira uppercase text-md text-center h-6 flex items-center justify-center mt-4">
+                  ${{ parseFloat(product.priceRangeV2.minVariantPrice.amount).toFixed(2) }}
+                </span>
+                <span v-else class="text-emerald-500 font-saira uppercase text-md text-center h-6 flex items-center justify-center mt-4">
                   ${{ parseFloat(product.priceRangeV2.minVariantPrice.amount).toFixed(2) }} - ${{ parseFloat(product.priceRangeV2.maxVariantPrice.amount).toFixed(2) }}
                 </span>
+                <Button variant="outline" class="text-gray-200 font-saira uppercase text-md text-center mt-4 w-full bg-gray-500 hover:bg-emerald-500">SAVE</Button>
               </CardContent>
             </Card>
           </div>

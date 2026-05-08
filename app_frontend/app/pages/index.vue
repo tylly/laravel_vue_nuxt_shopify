@@ -1,9 +1,5 @@
-<template>
-  <div>
-    <h1 class="text-2xs font-saira">Welcome to the Workout Planner App!</h1>
-  </div>
-</template>
-<script setup>
+<script setup lang="ts">
+import { Button } from "@/components/ui/button";
 console.log("Welcome page loaded");
 const config = useRuntimeConfig();
 const testfunction = async () => {
@@ -18,3 +14,9 @@ const testfunction = async () => {
 
 testfunction();
 </script>
+<template>
+  <div>
+    <h1 class="text-2xs font-saira mb-20">Welcome to the Workout Planner App!</h1>
+    <Button class="bg-red-200">Test</Button>
+  </div>
+</template>

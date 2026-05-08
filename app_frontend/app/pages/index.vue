@@ -11,6 +11,8 @@ const testfunction = async () => {
     console.error("Error fetching API:", error);
   }
 };
+const { isAuthenticated, user } = useSanctumAuth();
+console.log(user);
 </script>
 <template>
   <div>

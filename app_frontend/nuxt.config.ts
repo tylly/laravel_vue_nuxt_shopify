@@ -17,13 +17,14 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: process.env.API_BASE_URL || "http://localhost:3000",
+      apiBase: process.env.API_BASE_URL || "http://localhost:8000",
     },
   },
 
   modules: ["@nuxtjs/tailwindcss", "@nuxt/fonts", "shadcn-nuxt", "nuxt-auth-sanctum"],
   sanctum: {
     baseUrl: "http://localhost:8000", // Laravel API
+    origin: "http://localhost:3000",
   },
   shadcn: {
     /**

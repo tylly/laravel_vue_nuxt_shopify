@@ -62,11 +62,19 @@ Route::get('/api/get-products', function () {
     $api_version = env("SHOPIFY_API_VERSION");
     $url = "$base_url/admin/api/$api_version/graphql.json";
     $query = '{
-  products(first: 3) {
+  products(first: 10) {
     edges {
       node {
         id
         title
+        priceRangeV2 {
+          minVariantPrice{
+            amount
+          }
+          maxVariantPrice{
+            amount
+          }
+        }
         featuredMedia {
           preview {
             image {

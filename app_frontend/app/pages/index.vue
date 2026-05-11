@@ -7,7 +7,7 @@ import type { ShopifyProductsResponse, Product } from "@/types/shopify";
 const config = useRuntimeConfig();
 const { isAuthenticated, user } = useSanctumAuth();
 const { data } = await useFetch<ShopifyProductsResponse>(`${config.public.apiBase}/api/get-products`);
-console.log(data.value);
+console.log(isAuthenticated.value);
 const products = computed<Product[]>(() => data.value?.data?.products?.edges?.map((edge) => edge.node) ?? []);
 </script>
 <template>
@@ -23,7 +23,7 @@ const products = computed<Product[]>(() => data.value?.data?.products?.edges?.ma
           <div class="p-1">
             <Card class="bg-black/40 shadow-xl border-0 w-64 h-84">
               <CardContent class="flex flex-col items-center justify-center p-6 w-full h-full">
-                <img v-if="product.featuredMedia?.preview?.image?.url" :src="product.featuredMedia.preview.image.url" :alt="product.title" class=" h-40 mb-2 rounded-2xl" />
+                <img v-if="product.featuredMedia?.preview?.image?.url" :src="product.featuredMedia.preview.image.url" :alt="product.title" class="h-40 mb-2 rounded-2xl" />
                 <span class="text-gray-200 font-saira uppercase text-sm text-center h-10 flex items-center justify-center">{{ product.title }}</span>
                 <span
                   v-if="product.priceRangeV2.minVariantPrice.amount === product.priceRangeV2.maxVariantPrice.amount"
@@ -33,7 +33,7 @@ const products = computed<Product[]>(() => data.value?.data?.products?.edges?.ma
                 <span v-else class="text-emerald-500 font-saira uppercase text-md text-center h-6 flex items-center justify-center mt-4">
                   ${{ parseFloat(product.priceRangeV2.minVariantPrice.amount).toFixed(2) }} - ${{ parseFloat(product.priceRangeV2.maxVariantPrice.amount).toFixed(2) }}
                 </span>
-                <Button variant="outline" class="text-gray-200 font-saira uppercase text-md text-center mt-4 w-full bg-gray-500 hover:bg-emerald-500">SAVE</Button>
+                <Button v-if="isAuthenticated" variant="outline" class="text-gray-200 font-saira uppercase text-md text-center mt-4 w-full bg-gray-500 hover:bg-emerald-500">SAVE</Button>
               </CardContent>
             </Card>
           </div>

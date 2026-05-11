@@ -37,6 +37,11 @@ class WishlistController extends Controller
             'product_id' => $validated['product_id'],
             'user_id' => Auth::id()
         ]);
+
+        return response()->json([
+            'message' => 'Product added to wishlist',
+            'data' => $wishlist
+        ], 201);
     }
 
     /**

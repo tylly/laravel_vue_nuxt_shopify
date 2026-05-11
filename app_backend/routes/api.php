@@ -2,11 +2,17 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WishlistController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::post("/wishlist", [WishlistController::class, 'store'])->name('store');
+});
 
 Route::get('/get-products', function () {
     $access_token = env('SHOPIFY_PRIVATE_TOKEN');

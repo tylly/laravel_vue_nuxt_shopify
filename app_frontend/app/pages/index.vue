@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import ProductCard from "~/components/ProductCard.vue";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import type { ShopifyProductsResponse, Product } from "@/types/shopify";
 
@@ -21,21 +20,7 @@ const products = computed<Product[]>(() => data.value?.data?.products?.edges?.ma
       <CarouselContent>
         <CarouselItem v-for="product in products" :key="product.id" class="md:basis-1/2 lg:basis-1/3 w-full">
           <div class="p-1">
-            <Card class="bg-black/40 shadow-xl border-0 w-64 h-84">
-              <CardContent class="flex flex-col items-center justify-center p-6 w-full h-full">
-                <img v-if="product.featuredMedia?.preview?.image?.url" :src="product.featuredMedia.preview.image.url" :alt="product.title" class="h-40 mb-2 rounded-2xl" />
-                <span class="text-gray-200 font-saira uppercase text-sm text-center h-10 flex items-center justify-center">{{ product.title }}</span>
-                <span
-                  v-if="product.priceRangeV2.minVariantPrice.amount === product.priceRangeV2.maxVariantPrice.amount"
-                  class="text-emerald-500 font-saira uppercase text-md text-center h-6 flex items-center justify-center mt-4">
-                  ${{ parseFloat(product.priceRangeV2.minVariantPrice.amount).toFixed(2) }}
-                </span>
-                <span v-else class="text-emerald-500 font-saira uppercase text-md text-center h-6 flex items-center justify-center mt-4">
-                  ${{ parseFloat(product.priceRangeV2.minVariantPrice.amount).toFixed(2) }} - ${{ parseFloat(product.priceRangeV2.maxVariantPrice.amount).toFixed(2) }}
-                </span>
-                <Button v-if="isAuthenticated" variant="outline" class="text-gray-200 font-saira uppercase text-md text-center mt-4 w-full bg-gray-500 hover:bg-emerald-500">SAVE</Button>
-              </CardContent>
-            </Card>
+            <ProductCard :product="product" />
           </div>
         </CarouselItem>
       </CarouselContent>

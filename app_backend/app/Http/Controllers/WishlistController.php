@@ -33,6 +33,16 @@ class WishlistController extends Controller
             'product_id' => 'required|string|max:255',
         ]);
 
+        $exists = Wishlist::where('product_id', $validated['product_id'])
+            ->where('user_id', Auth::id())
+            ->exists();
+
+        if ($exists) {
+            return response()->json([
+                'message' => 'Product already in wishlist',
+            ], 409);
+        }
+
         $wishlist = Wishlist::create([
             'product_id' => $validated['product_id'],
             'user_id' => Auth::id()

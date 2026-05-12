@@ -11,7 +11,7 @@ const products = computed<Product[]>(() => data.value?.data?.products?.edges?.ma
 </script>
 <template>
   <div class="text-center flex flex-col justify-center">
-    <h1 class="text-4xl font-saira uppercase mb-20 text-gray-200">Shopify Store Wishlist</h1>
+    <h1 class="text-4xl font-saira uppercase mb-20 text-gray-200">Store Catalogue</h1>
     <Carousel
       class="relative w-full mx-auto"
       :opts="{

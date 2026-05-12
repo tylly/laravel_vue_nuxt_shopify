@@ -20,13 +20,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     $user_id = Auth::id();
     $wishlist_array = Wishlist::where('user_id', $user_id)->get();
 
-    $formatted_ids = $wishlist_array->map(function ($item) {
-      return 'id:' . substr($item->product_id, 22);
-    })->implode(' OR ');
+    if (count($wishlist_array)) {
 
-    $api_version = env("SHOPIFY_API_VERSION");
-    $url = "$base_url/admin/api/$api_version/graphql.json";
-    $query = "{
+      $formatted_ids = $wishlist_array->map(function ($item) {
+        return 'id:' . substr($item->product_id, 22);
+      })->implode(' OR ');
+
+      $api_version = env("SHOPIFY_API_VERSION");
+      $url = "$base_url/admin/api/$api_version/graphql.json";
+      $query = "{
   products(first: 10, query: \"$formatted_ids\") {
     edges {
       node {
@@ -52,28 +54,33 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
   }
 }";
 
-    $payload = json_encode(['query' => $query]);
-    $ch = curl_init($url);
-    curl_setopt_array($ch, [
-      CURLOPT_POST => true,
-      CURLOPT_POSTFIELDS => $payload,
-      CURLOPT_HTTPHEADER => [
-        'Content-Type: application/json',
-        "X-Shopify-Access-Token: $access_token",
-      ],
-      CURLOPT_RETURNTRANSFER => true
-    ]);
+      $payload = json_encode(['query' => $query]);
+      $ch = curl_init($url);
+      curl_setopt_array($ch, [
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => $payload,
+        CURLOPT_HTTPHEADER => [
+          'Content-Type: application/json',
+          "X-Shopify-Access-Token: $access_token",
+        ],
+        CURLOPT_RETURNTRANSFER => true
+      ]);
 
-    $response = curl_exec($ch);
-    $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $curlError = curl_error($ch);
-    curl_close($ch);
+      $response = curl_exec($ch);
+      $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+      $curlError = curl_error($ch);
+      curl_close($ch);
 
-    if ($curlError) {
-      return response()->json(['error' => $curlError], 500);
+      if ($curlError) {
+        return response()->json(['error' => $curlError], 500);
+      }
+      return response()->json(json_decode($response));
+    } else {
+      return response()->json([]);
     }
-    return response()->json(json_decode($response));
   });
+
+  Route::delete("/wishlist", [WishlistController::class, 'destroy'])->name('destroy');
 });
 
 Route::get('/get-products', function () {

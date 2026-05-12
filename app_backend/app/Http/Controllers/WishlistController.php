@@ -71,8 +71,14 @@ class WishlistController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Wishlist $wishlist)
+    public function destroy(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'product_id' => 'required|string|max:255',
+        ]);
+
+        Wishlist::where('product_id', $validated['product_id'])
+            ->where('user_id', Auth::id())
+            ->delete();
     }
 }

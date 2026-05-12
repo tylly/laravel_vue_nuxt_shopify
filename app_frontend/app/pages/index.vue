@@ -20,7 +20,7 @@ const products = computed<Product[]>(() => data.value?.data?.products?.edges?.ma
       <CarouselContent>
         <CarouselItem v-for="product in products" :key="product.id" class="md:basis-1/2 lg:basis-1/3 w-full">
           <div class="p-1">
-            <ProductCard :product="product" />
+            <ProductCard :product="product" :isWishlist="false" />
           </div>
         </CarouselItem>
       </CarouselContent>

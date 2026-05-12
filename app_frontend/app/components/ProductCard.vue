@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import type { Product } from "@/types/shopify";
 import { Card, CardContent } from "@/components/ui/card";
+import { toast } from "vue-sonner";
 const props = defineProps<{
   product: Product;
+  isWishlist: Boolean;
 }>();
 const { isAuthenticated } = useSanctumAuth();
 
@@ -14,6 +16,22 @@ const saveToWishlist = async () => {
         product_id: props.product.id,
       },
     });
+    toast.success(`${props.product.title} was added to your wishlist!`);
+  } catch (error) {
+    console.error("Failed to save to wishlist:", error);
+     toast.error(`${props.product.title} could not be added to your wishlist!`);
+  }
+};
+
+const deleteFromWishlist = async () => {
+  try {
+    await useSanctumFetch("/api/wishlist", {
+      method: "DELETE",
+      body: {
+        product_id: props.product.id,
+      },
+    });
+    window.location.reload();
   } catch (error) {
     console.error("Failed to save to wishlist:", error);
   }
@@ -32,7 +50,16 @@ const saveToWishlist = async () => {
       <span v-else class="text-emerald-500 font-saira uppercase text-md text-center h-6 flex items-center justify-center mt-4">
         ${{ parseFloat(product.priceRangeV2.minVariantPrice.amount).toFixed(2) }} - ${{ parseFloat(product.priceRangeV2.maxVariantPrice.amount).toFixed(2) }}
       </span>
-      <Button @click="saveToWishlist" v-if="isAuthenticated" variant="outline" class="text-gray-200 font-saira uppercase text-md text-center mt-4 w-full bg-gray-500 hover:bg-emerald-500">SAVE</Button>
+      <Button
+        @click="saveToWishlist"
+        v-if="isAuthenticated && !isWishlist"
+        variant="outline"
+        class="text-gray-200 font-saira uppercase text-md text-center mt-4 w-full bg-gray-500 hover:bg-emerald-500"
+        >SAVE</Button
+      >
+      <Button @click="deleteFromWishlist" v-if="isAuthenticated && isWishlist" variant="outline" class="text-gray-200 font-saira uppercase text-md text-center mt-4 w-full bg-red-800 hover:bg-red-500"
+        >DELETE</Button
+      >
     </CardContent>
   </Card>
 </template>
